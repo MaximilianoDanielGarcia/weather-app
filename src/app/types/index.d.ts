@@ -97,5 +97,7 @@ export interface GeoSearchResponse {
 export interface FavoriteLocation {
   latitude: number;
   longitude: number;
+  city: string;
+  country?: string;
   location: string;
 };

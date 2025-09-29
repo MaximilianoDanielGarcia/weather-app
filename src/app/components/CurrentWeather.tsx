@@ -31,7 +31,7 @@ const CurrentWeather = ({ city, country, temp }: Props) => {
                     </div>
                 </div>
 
-                <FavoriteToggle latitude={data?.latitude!} longitude={data?.longitude!} location={`${geoLocationData?.name ?? city}, ${geoLocationData?.country ?? country}`} />
+                <FavoriteToggle latitude={data?.latitude!} longitude={data?.longitude!} city={geoLocationData?.name ?? city!} country={geoLocationData?.country ?? country} />
 
                 <div className='flex flex-col sm:flex-row sm:justify-between justify-center items-center w-full'>
                     <div className='flex-1 flex flex-col justify-center gap-1.5 sm:text-left text-center'>

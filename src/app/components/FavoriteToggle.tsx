@@ -5,18 +5,20 @@ import { useFavoritesStore } from "../store/favoritesStore";
 type Props = {
     latitude: number;
     longitude: number;
-    location: string;
+    city: string;
+    country?: string;
 }
 
-export default function FavoriteToggle({ latitude, longitude, location }: Props) {
+export default function FavoriteToggle({ latitude, longitude, city, country }: Props) {
     const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
+    const location = `${city}${country ? `, ${country}` : ""}`;
     const favorite = isFavorite(location);
 
     const toggleFavorite = () => {
         if (favorite) {
             removeFavorite(location);
         } else {
-            addFavorite({ latitude, longitude, location });
+            addFavorite({ latitude, longitude, city, country, location });
         }
     };
 

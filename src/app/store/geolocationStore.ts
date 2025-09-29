@@ -2,13 +2,17 @@ import { create } from "zustand";
 import { GeoSearchResult } from "../types";
 
 interface GeoLocationState {
-    data: GeoSearchResult | null;
-    setGeoLocationData: (data: GeoSearchResult | null) => void;
+    data: Partial<GeoSearchResult> | null;
+    setGeoLocationData: (update: Partial<GeoSearchResult>) => void;
 }
 
 export const useGeoLocationStore = create<GeoLocationState>((set) => ({
     data: null,
-    setGeoLocationData: (data: GeoSearchResult | null) => {
-        set({ data });
-    },
+    setGeoLocationData: (update) =>
+        set((state) => ({
+            data: {
+                ...state.data,
+                ...update,
+            },
+        })),
 }));

@@ -6,6 +6,8 @@ import cn from "clsx";
 import { useFavoritesStore } from "../store/favoritesStore";
 import { useWeatherStore } from "../store/weatherStore";
 import { fetchWeatherForecast } from "../lib/weather-service";
+import { useGeoLocationStore } from "../store/geolocationStore";
+import { FavoriteLocation } from "../types";
 
 export default function FavoriteLocationsDropdown() {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +15,7 @@ export default function FavoriteLocationsDropdown() {
 
     const { favorites } = useFavoritesStore();
     const { setWeatherData } = useWeatherStore();
+    const { setGeoLocationData } = useGeoLocationStore();
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -31,17 +34,14 @@ export default function FavoriteLocationsDropdown() {
         };
     }, []);
 
-    const handleSelectFavorite = async (
-        location: string,
-        latitude: number,
-        longitude: number
-    ) => {
-        setSelectedLocation(location);
+    const handleSelectFavorite = async (fav: FavoriteLocation) => {
+        setSelectedLocation(fav.location);
         setIsOpen(false);
 
-        const data = await fetchWeatherForecast(latitude, longitude);
+        const data = await fetchWeatherForecast(fav.latitude, fav.longitude);
         if (data) {
             setWeatherData(data);
+            setGeoLocationData({ name: fav.city, country: fav.country });
         }
     };
 
@@ -73,7 +73,7 @@ export default function FavoriteLocationsDropdown() {
                             <button
                                 key={fav.location}
                                 onClick={() =>
-                                    handleSelectFavorite(fav.location, fav.latitude, fav.longitude)
+                                    handleSelectFavorite(fav)
                                 }
                                 className={cn(
                                     "w-full text-left px-2 py-2.5 rounded-lg hover:bg-neutral-600 transition flex justify-between items-center cursor-pointer",
