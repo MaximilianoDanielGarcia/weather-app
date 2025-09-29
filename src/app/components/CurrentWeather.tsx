@@ -7,6 +7,7 @@ import { useWeatherStore } from '../store/weatherStore';
 import { useGeoLocationStore } from '../store/geolocationStore';
 import { useUnitStore } from '../store/unitsStore';
 import { getWeatherIcon } from '../lib/weather-service';
+import FavoriteToggle from './FavoriteToggle';
 
 type Props = {
     city?: string;
@@ -21,17 +22,19 @@ const CurrentWeather = ({ city, country, temp }: Props) => {
     const { units } = useUnitStore();
 
     return (
-        <section className='flex flex-col gap-8 max-w-[800px]'>
-            <div className='relative grid min-h-[286px] px-6 rounded-[20px] overflow-hidden'>
+        <section className='flex flex-col gap-8 w-full max-w-[800px]'>
+            <div className='relative grid min-h-[286px] px-6 rounded-[20px] w-full overflow-hidden'>
                 <div className='absolute w-full h-full top-0 left-0 -z-10'>
-                    <div className='relative w-full h-full'>
+                    <div className='relative size-full'>
                         <Image src={"/assets/images/bg-today-small.svg"} alt='' className='sm:hidden block object-cover' fill />
                         <Image src={"/assets/images/bg-today-large.svg"} alt='' className='sm:block hidden object-cover' fill />
                     </div>
                 </div>
 
-                <div className='flex flex-col sm:flex-row justify-between items-center w-full'>
-                    <div className='flex-1 flex flex-col gap-1.5 sm:text-left text-center'>
+                <FavoriteToggle latitude={data?.latitude!} longitude={data?.longitude!} location={`${geoLocationData?.name ?? city}, ${geoLocationData?.country ?? country}`} />
+
+                <div className='flex flex-col sm:flex-row sm:justify-between justify-center items-center w-full'>
+                    <div className='flex-1 flex flex-col justify-center gap-1.5 sm:text-left text-center'>
                         <span className='font-bold text-[28px] font-sans leading-tight'>{geoLocationData?.name ?? city}, {geoLocationData?.country ?? country}</span>
                         <span className='font-sans text-lg font-medium opacity-80'>{getFormattedDate()}</span>
                     </div>
@@ -75,8 +78,8 @@ const CurrentWeather = ({ city, country, temp }: Props) => {
                 ) : (
 
                     <>
-                    <span className='text-neutral-200 font-medium text-lg font-sans'>Loading...</span>
-                    
+                        <span className='text-neutral-200 font-medium text-lg font-sans'>Loading...</span>
+
                     </>
                 )}
 

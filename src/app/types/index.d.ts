@@ -93,3 +93,9 @@ export interface GeoSearchResult {
 export interface GeoSearchResponse {
   results: GeoSearchResult[];
 }
+
+export interface FavoriteLocation {
+  latitude: number;
+  longitude: number;
+  location: string;
+};

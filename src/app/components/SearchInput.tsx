@@ -43,11 +43,11 @@ export default function SearchInput() {
         const weatherData = await fetchWeatherForecast(selectedSuggestion.latitude, selectedSuggestion.longitude);
 
         setWeatherData(weatherData);
+        setGeoLocationData(selectedSuggestion);
     };
 
     const onSelectSuggestion = async (suggestion: GeoSearchResult) => {
         setSelectedSuggestion(suggestion);
-        setGeoLocationData(suggestion);
         setShowSuggestions(false);
     };
 
@@ -70,7 +70,7 @@ export default function SearchInput() {
     };
 
     return (
-        <div className="relative">
+        <div className="relative w-full">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
                 <div className="relative flex items-center w-full max-w-[526px] h-[56px] border border-neutral-600 rounded-xl bg-neutral-800">
                     <input

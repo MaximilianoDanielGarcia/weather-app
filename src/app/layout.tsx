@@ -30,6 +30,7 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${bricolageGrotesque.variable} antialiased`}
       >
+
         <Header />
         {children}
       </body>

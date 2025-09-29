@@ -13,14 +13,14 @@ const HourlyForecast = () => {
     const { units } = useUnitStore();
 
     return (
-        <section className='flex flex-col min-w-[385px] p-6 gap-4 bg-neutral-800 rounded-2xl'>
+        <section className='flex flex-col w-full md:max-w-[385px] sm:p-6 p-4 gap-4 bg-neutral-800 rounded-2xl'>
 
-            <div className='flex items-center justify-between'>
+            <div className='flex items-center w-full justify-between'>
                 <h2 className='text-white font-sans text-xl font-semibold'>Hourly forecast</h2>
                 <WeekdayDropdown />
             </div>
 
-            <div className='flex flex-col gap-4 h-[592px] overflow-y-scroll scrollbar-custom'>
+            <div className='flex flex-col w-full gap-4 h-[592px] overflow-y-scroll scrollbar-custom'>
                 {data && data.hourly.time.map((time: string, idx: number) => (
                     <HourlyForecastCard 
                         key={idx} 

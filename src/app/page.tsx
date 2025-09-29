@@ -22,16 +22,16 @@ export default async function Home() {
   }
 
   return (
-    <main className="max-w-[1440px] flex flex-col gap-16 pt-8 px-4 mx-auto pb-10">
+    <main className="max-w-[1440px] w-full flex flex-col gap-16 pt-8 px-4 mx-auto pb-10">
       <WeatherInitializer data={weatherData} />
-      <section className="flex flex-col gap-10">
+      <section className="flex flex-col items-center w-full gap-10">
         <h1 className="font-bricolage text-[52px] text-center max-w-[482px] lg:max-w-full">How's the sky looking today?</h1>
 
         <SearchInput />
       </section>
 
-      <div className="flex gap-8 mx-auto">
-        <div className="flex flex-col gap-12">
+      <div className="flex xl:flex-row flex-col items-center gap-8 w-full justify-center">
+        <div className="flex flex-col gap-12 shrink-0">
           <CurrentWeather city={location.city} country={location.country_name} temp={weatherData.current.temperature_2m} />
           <DailyForecast />
         </div>
