@@ -13,7 +13,7 @@ const HourlyForecast = () => {
     const { units } = useUnitStore();
 
     return (
-        <section className='flex flex-col w-full md:max-w-[385px] sm:p-6 p-4 gap-4 bg-neutral-800 rounded-2xl'>
+        <section className='flex flex-col w-full h-full xl:max-w-[385px] max-w-[800px] sm:p-6 p-4 gap-4 bg-neutral-800 rounded-2xl shrink-0'>
 
             <div className='flex items-center w-full justify-between'>
                 <h2 className='text-white font-sans text-xl font-semibold'>Hourly forecast</h2>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useFavoritesStore } from "../store/favoritesStore";
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 }
 
 export default function FavoriteToggle({ latitude, longitude, city, country }: Props) {
+    const [hasMounted, setHasMounted] = useState(false);
     const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
     const location = `${city}${country ? `, ${country}` : ""}`;
     const favorite = isFavorite(location);
@@ -22,10 +24,16 @@ export default function FavoriteToggle({ latitude, longitude, city, country }: P
         }
     };
 
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
+
+    if (!hasMounted) return null;
+
     return (
         <div
             onClick={toggleFavorite}
-            className="absolute top-6 right-6 cursor-pointer z-10 transition-colors"
+            className="absolute sm:top-6 sm:right-6 top-3 right-3 cursor-pointer z-10 transition-colors"
         >
             {favorite ? (
                 // ⭐ Ícono relleno

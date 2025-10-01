@@ -11,10 +11,10 @@ type Props = {
 
 const DailyForecastCard = ({day, weatherCode, tempMax, tempMin }: Props) => {
   return (
-    <div className='flex flex-col gap-4 items-center lg:min-w-[100px] min-w-[89px] border border-neutral-600 bg-neutral-800 rounded-xl px-2.5 py-4 font-sans'>
+    <div className='flex flex-col gap-4 items-center lg:min-w-[100px] h-[165px] min-w-[89px] border border-neutral-600 bg-neutral-800 rounded-xl px-2.5 py-4 font-sans'>
         <span className='text-white font-medium text-lg'>{day}</span>
         
-        <div className='relative size-[60px]'>
+        <div className='relative w-[48px] h-auto aspect-square'>
             <Image src={`/assets/images/${getWeatherIcon(weatherCode)}.webp`} alt='sunny' fill/>
         </div>
         

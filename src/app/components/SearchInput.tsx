@@ -71,8 +71,8 @@ export default function SearchInput() {
 
     return (
         <div className="relative w-full">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
-                <div className="relative flex items-center w-full max-w-[526px] h-[56px] border border-neutral-600 rounded-xl bg-neutral-800">
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:gap-4 gap-3 w-full max-w-[800px] mx-auto">
+                <div className="relative flex items-center w-full lg:max-w-[526px] h-[56px] border border-neutral-600 rounded-xl bg-neutral-800">
                     <input
                         ref={inputRef}
                         type="text"

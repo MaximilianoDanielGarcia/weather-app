@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -28,11 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.variable} ${bricolageGrotesque.variable} antialiased`}
+        className={`${dmSans.variable} ${bricolageGrotesque.variable} antialiased grid place-items-center pb-[40px]`}
       >
 
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

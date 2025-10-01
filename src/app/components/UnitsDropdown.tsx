@@ -50,7 +50,7 @@ export default function UnitsDropdown() {
                 className="flex items-center h-[42px] gap-2 px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-600 hover:bg-neutral-700 transition cursor-pointer"
             >
                 <Image src={"/assets/images/icon-units.svg"} width={16} height={16} alt="" />
-                <span className="font-sans font-light text-base">Units</span>
+                <span className="font-sans font-light text-base sm:block hidden">Units</span>
                 <Image src={"/assets/images/icon-dropdown.svg"} width={12} height={10} alt="" />
             </button>
 
