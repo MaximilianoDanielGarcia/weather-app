@@ -37,7 +37,7 @@ export default function SearchInput() {
         return () => clearTimeout(timeout);
     }, [query]);
 
-    const onSearch = async (query: string) => {
+    const onSearch = async () => {
         if (!selectedSuggestion) return;
 
         const weatherData = await fetchWeatherForecast(selectedSuggestion.latitude, selectedSuggestion.longitude);
@@ -59,7 +59,7 @@ export default function SearchInput() {
 
     const handleSearch = () => {
         if (!query.trim()) return;
-        onSearch(query.trim());
+        onSearch();
         setShowSuggestions(false);
     };
 

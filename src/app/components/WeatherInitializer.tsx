@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useWeatherStore } from '../store/weatherStore';
 import { WeatherForecast } from '../types';
 

@@ -43,12 +43,14 @@ export default function WeekdayDropdown() {
         setIsOpen(false);
 
         if (data) {
-            const forecast = await fetchHourlyForecastForDay(data?.latitude!, data?.longitude!, day, data?.timezone!);
+            const forecast = await fetchHourlyForecastForDay(data.latitude, data.longitude, day, data.timezone);
 
-            setWeatherData({
-                ...data,
-                hourly: forecast?.hourly!
-            });
+            if (forecast) {
+                setWeatherData({
+                    ...data,
+                    hourly: forecast.hourly
+                });
+            }
         }
     };
 

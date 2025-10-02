@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import cn from "clsx";
-import { useUnitStore } from "../store/unitsStore";
+import { PrecipitationUnit, TemperatureUnit, useUnitStore, WindSpeedUnit } from "../store/unitsStore";
 
 export default function UnitsDropdown() {
     const [isOpen, setIsOpen] = useState(false);
@@ -95,7 +95,7 @@ export default function UnitsDropdown() {
                                         className="hidden"
                                         value={value}
                                         checked={units.temperature === value}
-                                        onChange={() => setUnit("temperature", value as any)}
+                                        onChange={() => setUnit("temperature", value as TemperatureUnit)}
                                     />
                                     <span className="text-base font-medium text-white font-sans">
                                         {value === "celsius" ? "Celsius (°C)" : "Fahrenheit (°F)"}
@@ -133,7 +133,7 @@ export default function UnitsDropdown() {
                                         className="hidden"
                                         value={value}
                                         checked={units.windSpeed === value}
-                                        onChange={() => setUnit("windSpeed", value as any)}
+                                        onChange={() => setUnit("windSpeed", value as WindSpeedUnit)}
                                     />
                                     <span className="text-base font-medium text-white font-sans">
                                         {value}
@@ -171,7 +171,7 @@ export default function UnitsDropdown() {
                                         className="hidden"
                                         value={value}
                                         checked={units.precipitation === value}
-                                        onChange={() => setUnit("precipitation", value as any)}
+                                        onChange={() => setUnit("precipitation", value as PrecipitationUnit)}
                                     />
                                     <span className="text-base font-medium text-white font-sans">
                                         {value}

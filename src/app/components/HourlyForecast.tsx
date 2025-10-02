@@ -7,6 +7,13 @@ import { useUnitStore } from '../store/unitsStore';
 import { getHour12hsFormat, getTemperature } from '../utils';
 import WeekdayDropdown from './WeekdayDropdown';
 
+const HourlyForecastCardSkeleton = () => {
+    return (
+        <div className="w-full h-[60px] rounded-lg bg-neutral-700 border border-neutral-600 animate-pulse">
+        </div>
+    );
+};
+
 const HourlyForecast = () => {
 
     const { data } = useWeatherStore();
@@ -21,14 +28,20 @@ const HourlyForecast = () => {
             </div>
 
             <div className='flex flex-col w-full gap-4 h-[592px] overflow-y-scroll scrollbar-custom'>
-                {data && data.hourly.time.map((time: string, idx: number) => (
-                    <HourlyForecastCard 
-                        key={idx} 
-                        time={getHour12hsFormat(time)}
-                        temperature={getTemperature(data.hourly.temperature_2m[idx], units.temperature)}
-                        weatherCode={data.hourly.weather_code[idx]} />
-                ))
-                }
+                {!data ? (
+                    Array.from({ length: 8 }).map((_, idx) => (
+                        <HourlyForecastCardSkeleton key={idx} />
+                    ))
+                ) : (
+                    data?.hourly.time.map((time: string, idx: number) => (
+                        <HourlyForecastCard
+                            key={idx}
+                            time={getHour12hsFormat(time)}
+                            temperature={getTemperature(data.hourly.temperature_2m[idx], units.temperature)}
+                            weatherCode={data.hourly.weather_code[idx]}
+                        />
+                    ))
+                )}
             </div>
 
         </section>

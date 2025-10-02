@@ -10,12 +10,11 @@ import { getWeatherIcon } from '../lib/weather-service';
 import FavoriteToggle from './FavoriteToggle';
 
 type Props = {
-    city?: string;
-    country?: string;
-    temp?: number;
+    city: string;
+    country: string;
 }
 
-const CurrentWeather = ({ city, country, temp }: Props) => {
+const CurrentWeather = ({ city, country }: Props) => {
 
     const { data } = useWeatherStore();
     const { data: geoLocationData } = useGeoLocationStore();
@@ -23,68 +22,64 @@ const CurrentWeather = ({ city, country, temp }: Props) => {
 
     return (
         <section className='flex flex-col gap-8 w-full max-w-[800px]'>
-            <div className='relative grid min-h-[286px] px-6 rounded-[20px] w-full overflow-hidden'>
-                <div className='absolute w-full h-full top-0 left-0 -z-10'>
-                    <div className='relative size-full'>
-                        <Image src={"/assets/images/bg-today-small.svg"} alt='' className='sm:hidden block object-cover' fill />
-                        <Image src={"/assets/images/bg-today-large.svg"} alt='' className='sm:block hidden object-cover' fill />
-                    </div>
-                </div>
+            {data && data.current ? (
 
-                <FavoriteToggle latitude={data?.latitude!} longitude={data?.longitude!} city={geoLocationData?.name ?? city!} country={geoLocationData?.country ?? country} />
-
-                <div className='flex flex-col sm:flex-row sm:justify-between justify-center items-center w-full'>
-                    <div className='flex-1 flex flex-col justify-center gap-1.5 sm:text-left text-center'>
-                        <span className='font-bold text-[28px] font-sans leading-tight'>{geoLocationData?.name ?? city}, {geoLocationData?.country ?? country}</span>
-                        <span className='font-sans text-lg font-medium opacity-80'>{getFormattedDate()}</span>
-                    </div>
-
-                    <div className='flex-1 flex items-center sm:justify-end justify-between gap-3 w-full'>
-                        <div className='relative w-[120px] h-[120px]'>
-                            <Image src={`/assets/images/${getWeatherIcon(data?.current.weather_code ?? 1)}.webp`} alt='weather icon' className='contain' fill />
+                <div className='relative grid min-h-[286px] px-6 rounded-[20px] w-full overflow-hidden'>
+                    <div className='absolute w-full h-full top-0 left-0 -z-10'>
+                        <div className='relative size-full'>
+                            <Image src={"/assets/images/bg-today-small.svg"} alt='' className='sm:hidden block object-cover' fill />
+                            <Image src={"/assets/images/bg-today-large.svg"} alt='' className='sm:block hidden object-cover' fill />
                         </div>
-                        <span className='font-sans font-semibold text-[96px]'><span className='italic pr-3'>{getTemperature(data?.current.temperature_2m ?? temp!, units.temperature)}</span>°</span>
+                    </div>
+
+                    <FavoriteToggle latitude={data.latitude} longitude={data.longitude} city={geoLocationData?.name ?? city} country={geoLocationData?.country ?? country} />
+
+                    <div className='flex flex-col sm:flex-row sm:justify-between justify-center items-center w-full'>
+                        <div className='flex-1 flex flex-col justify-center gap-1.5 sm:text-left text-center'>
+                            <span className='font-bold text-[28px] font-sans leading-tight'>{geoLocationData?.name ?? city}, {geoLocationData?.country ?? country}</span>
+                            <span className='font-sans text-lg font-medium opacity-80'>{getFormattedDate()}</span>
+                        </div>
+
+                        <div className='flex-1 flex items-center sm:justify-end justify-between gap-3 w-full'>
+                            <div className='relative w-[120px] h-[120px]'>
+                                <Image src={`/assets/images/${getWeatherIcon(data.current.weather_code)}.webp`} alt='weather icon' className='contain' fill />
+                            </div>
+                            <span className='font-sans font-semibold text-[96px]'><span className='italic pr-3'>{getTemperature(data.current.temperature_2m, units.temperature)}</span>°</span>
+                        </div>
+                    </div>
+
+                </div>
+            ) : (
+
+                <div className='grid place-items-center min-h-[286px] rounded-[20px] w-full bg-neutral-800 animate-pulse'>
+                    <div className='flex flex-col gap-2 items-center'>
+                        <Image src={"/assets/images/icon-loading-dots.svg"} width={56} height={16} alt='Loading icon' />
+                        <span className='text-neutral-200 text-lg font-sans font-medium'>Loading...</span>
                     </div>
                 </div>
-
-            </div>
-
+            )}
 
             <div className='grid sm:grid-cols-4 grid-cols-2 sm:gap-6 gap-4'>
+                <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
+                    <span className='text-neutral-200 font-medium text-lg font-sans'>Feels Like</span>
+                    <span className='text-white font-sans text-[32px] font-light leading-tight'>{data ? `${getTemperature(data.current.apparent_temperature, units.temperature)}°` : '--'}</span>
+                </div>
 
-                {data ? (
-                    <>
-                        <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
-                            <span className='text-neutral-200 font-medium text-lg font-sans'>Feels Like</span>
-                            <span className='text-white font-sans text-[32px] font-light leading-tight'>{getTemperature(data?.current.apparent_temperature!, units.temperature)}°</span>
-                        </div>
+                <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
+                    <span className='text-neutral-200 font-medium text-lg font-sans'>Humidity</span>
+                    <span className='text-white font-sans text-[32px] font-light leading-tight'>{data ? `${data.current.relative_humidity_2m}%` : '--'}</span>
+                </div>
 
-                        <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
-                            <span className='text-neutral-200 font-medium text-lg font-sans'>Humidity</span>
-                            <span className='text-white font-sans text-[32px] font-light leading-tight'>{data?.current.relative_humidity_2m}%</span>
-                        </div>
+                <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
+                    <span className='text-neutral-200 font-medium text-lg font-sans'>Wind</span>
+                    <span className='text-white font-sans text-[32px] font-light leading-tight'>{data ? `${convertWindVelocity(data.current.wind_speed_10m, units.windSpeed)} ${units.windSpeed == "kmh" ? 'km/h' : 'mph'}` : '--'}</span>
+                </div>
 
-                        <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
-                            <span className='text-neutral-200 font-medium text-lg font-sans'>Wind</span>
-                            <span className='text-white font-sans text-[32px] font-light leading-tight'>{convertWindVelocity(data?.current.wind_speed_10m!, units.windSpeed)} {units.windSpeed == "kmh" ? 'km/h' : 'mph'}</span>
-                        </div>
-
-                        <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
-                            <span className='text-neutral-200 font-medium text-lg font-sans'>Precipitation</span>
-                            <span className='text-white font-sans text-[32px] font-light leading-tight'>{convertPrecipitation(data?.current.precipitation!, units.precipitation)} {units.precipitation}</span>
-                        </div>
-                    </>
-
-                ) : (
-
-                    <>
-                        <span className='text-neutral-200 font-medium text-lg font-sans'>Loading...</span>
-
-                    </>
-                )}
-
+                <div className='flex flex-col justify-between gap-2 border border-neutral-600 p-5 rounded-xl bg-neutral-800'>
+                    <span className='text-neutral-200 font-medium text-lg font-sans'>Precipitation</span>
+                    <span className='text-white font-sans text-[32px] font-light leading-tight'>{data ? `${convertPrecipitation(data.current.precipitation, units.precipitation)} ${units.precipitation}` : '--'}</span>
+                </div>
             </div>
-
         </section>
     )
 }
