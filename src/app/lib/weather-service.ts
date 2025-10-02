@@ -35,13 +35,11 @@ export async function fetchWeatherForecast(latitude: number, longitude: number, 
 
     if (!response.ok) {
       console.error(`Error en la respuesta del servidor: ${response.status}`);
-      console.log(response)
       return null;
     }
 
     const data: WeatherForecast = await response.json();
 
-    console.log(data);
     return data;
 
   } catch (error) {
