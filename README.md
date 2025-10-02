@@ -8,7 +8,7 @@
 
 ## Welcome 👋
 
-- [Live site here]()
+- [Live site here](https://weather-app-nine-psi-81.vercel.app/)
 
 ## Built with
 
