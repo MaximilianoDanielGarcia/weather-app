@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { convertPrecipitation, convertWindVelocity, getFormattedDate, getTemperature } from '../utils';
 import { useWeatherStore } from '../store/weatherStore';
 import { useGeoLocationStore } from '../store/geolocationStore';
@@ -9,16 +9,12 @@ import { useUnitStore } from '../store/unitsStore';
 import { getWeatherIcon } from '../lib/weather-service';
 import FavoriteToggle from './FavoriteToggle';
 
-type Props = {
-    city: string;
-    country: string;
-}
 
-const CurrentWeather = ({ city, country }: Props) => {
+const CurrentWeather = () => {
 
     const { data } = useWeatherStore();
-    const { data: geoLocationData } = useGeoLocationStore();
-    const { units } = useUnitStore();
+    const { data: geoLocationData, current } = useGeoLocationStore();
+    const { units } = useUnitStore();    
 
     return (
         <section className='flex flex-col gap-8 w-full max-w-[800px]'>
@@ -32,11 +28,11 @@ const CurrentWeather = ({ city, country }: Props) => {
                         </div>
                     </div>
 
-                    <FavoriteToggle latitude={data.latitude} longitude={data.longitude} city={geoLocationData?.name ?? city} country={geoLocationData?.country ?? country} />
+                    <FavoriteToggle latitude={data.latitude} longitude={data.longitude} city={geoLocationData?.name ?? current?.city ?? "--"} country={geoLocationData?.country ?? current?.country_name} />
 
                     <div className='flex flex-col sm:flex-row sm:justify-between justify-center items-center w-full'>
                         <div className='flex-1 flex flex-col justify-center gap-1.5 sm:text-left text-center'>
-                            <span className='font-bold text-[28px] font-sans leading-tight'>{geoLocationData?.name ?? city}, {geoLocationData?.country ?? country}</span>
+                            <span className='font-bold text-[28px] font-sans leading-tight'>{geoLocationData?.name ?? current?.city ?? "--"}, {geoLocationData?.country ?? current?.country_name ?? "--"}</span>
                             <span className='font-sans text-lg font-medium opacity-80'>{getFormattedDate()}</span>
                         </div>
 
